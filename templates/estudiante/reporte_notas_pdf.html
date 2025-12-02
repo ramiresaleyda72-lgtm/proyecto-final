@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Reporte de Notas</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            font-size: 12px;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            border-bottom: 2px solid #333;
+            padding-bottom: 10px;
+        }
+        .header h1 {
+            margin: 0;
+            font-size: 20px;
+            font-weight: bold;
+        }
+        .header p {
+            margin: 5px 0 0 0;
+            font-size: 14px;
+        }
+        .student-info {
+            margin-bottom: 20px;
+        }
+        .student-info p {
+            margin: 2px 0;
+        }
+        .grades-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+        .grades-table th, .grades-table td {
+            border: 1px solid #000;
+            padding: 8px;
+            text-align: center;
+            vertical-align: middle;
+        }
+        .grades-table th {
+            background-color: #f2f2f2;
+            font-weight: bold;
+        }
+        .grades-table .subject-name {
+            text-align: left;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <h1>UNIDAD EDUCATIVA "16  DE NOVIEMBRE-A"</h1>
+        <p>Libreta de Calificaciones - Educación Primaria</p>
+    </div>
+
+    <div class="student-info">
+        <p><strong>Estudiante:</strong> {{ estudiante.nombre }} {{ estudiante.paterno }} {{ estudiante.materno }}</p>
+        <p><strong>C.I.:</strong> {{ estudiante.ci }}</p>
+        <p><strong>Curso:</strong> {{ inscripcion.curso_rel.grado_rel.nombre }} - Paralelo "{{ inscripcion.curso_rel.grado_rel.paralelo }}"</p>
+        <p><strong>Gestión:</strong> {{ inscripcion.curso_rel.gestion_rel.anio }}</p>
+    </div>
+
+    <table class="grades-table">
+        <thead>
+            <tr>
+                <th style="width: 40%;">Área / Materia</th>
+                <th>1er Trimestre</th>
+                <th>2do Trimestre</th>
+                <th>3er Trimestre</th>
+                <th>Promedio Final</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for nota in notas %}
+            <tr>
+                <td class="subject-name">{{ nota.materia_rel.nombre }}</td>
+                <td>{{ nota.primer_trimestre or '-' }}</td>
+                <td>{{ nota.segundo_trimestre or '-' }}</td>
+                <td>{{ nota.tercer_trimestre or '-' }}</td>
+                <td><strong>{{ "%.2f"|format(nota.promedio_final) if nota.promedio_final else '-' }}</strong></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+</body>
+</html>

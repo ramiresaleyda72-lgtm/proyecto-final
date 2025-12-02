@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block title %}Crear Grado{% endblock %}
+{% block content %}
+<h1>Crear Nuevo Grado y Paralelo</h1>
+<form method="POST">
+    <div class="row">
+        <div class="col-md-8 mb-3">
+            <label for="nombre" class="form-label">Nombre del Grado</label>
+            <input type="text" class="form-control" name="nombre" placeholder="Ej: Primero de Primaria" required>
+        </div>
+        <div class="col-md-4 mb-3">
+            <label for="paralelo" class="form-label">Paralelo</label>
+            <input type="text" class="form-control" name="paralelo" placeholder="Ej: A" maxlength="1" required>
+        </div>
+    </div>
+    <button type="submit" class="btn btn-success">Crear Grado</button>
+    <a href="{{ url_for('admin.listar_grados') }}" class="btn btn-secondary">Cancelar</a>
+</form>
+{% endblock %}

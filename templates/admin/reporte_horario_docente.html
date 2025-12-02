@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+
+{% block title %}Reporte de Horario por Docente{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+    <h1 class="h2">Reporte de Horario por Docente</h1>
+    <a href="{{ url_for('admin.listar_docentes') }}" class="btn btn-sm btn-outline-secondary">Volver a Docentes</a>
+</div>
+
+<div class="card mb-4">
+    <div class="card-body">
+        <form method="POST">
+            <div class="row align-items-end">
+                <div class="col-md-6">
+                    <label for="id_docente" class="form-label">Seleccionar Docente:</label>
+                    <select class="form-select" id="id_docente" name="id_docente" required>
+                        <option value="">-- Selecciona un docente --</option>
+                        {% for doc in docentes %}
+                        <option value="{{ doc.id_docente }}" {% if selected_docente and selected_docente.id_docente == doc.id_docente %}selected{% endif %}>
+                            {{ doc.paterno }} {{ doc.materno }} {{ doc.nombre }}
+                        </option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="col-md-auto">
+                    <button type="submit" class="btn btn-primary">Ver Horario</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+{% if selected_docente %}
+<div class="card">
+    <div class="card-header">
+        <h5 class="mb-0">Horario de: {{ selected_docente.paterno }} {{ selected_docente.materno }} {{ selected_docente.nombre }}</h5>
+    </div>
+    <div class="card-body">
+        {% if horarios %}
+        <div class="table-responsive">
+            <table class="table table-striped table-hover align-middle">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Día</th>
+                        <th>Hora</th>
+                        <th>Curso</th>
+                        <th>Materia</th>
+                        <th>Aula</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for horario in horarios %}
+                    <tr>
+                        <td>{{ horario.dia_semana }}</td>
+                        <td>{{ horario.hora_inicio.strftime('%H:%M') }} - {{ horario.hora_fin.strftime('%H:%M') }}</td>
+                        <td>{{ horario.curso.grado_rel.nombre }} "{{ horario.curso.grado_rel.paralelo }}"</td>
+                        <td>{{ horario.materia.nombre }}</td>
+                        <td>{{ horario.aula or '-' }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% else %}
+        <p class="text-center text-muted">El docente seleccionado no tiene un horario asignado.</p>
+        {% endif %}
+    </div>
+</div>
+{% endif %}
+
+{% endblock %}

@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+{% block title %}Panel Administrativo{% endblock %}
+{% block content %}
+
+<div class="row mb-4">
+    <div class="col-12 text-center">
+        <h1 class="display-5 fw-bolder">UNIDAD EDUCATIVA 16 DE NOVIEMBRE</h1>
+    </div>
+</div>
+
+<div class="row mb-3">
+    <div class="col-12 text-center">
+        <img src="{{ url_for('serve_logo') }}" alt="Logo Unidad Educativa" class="img-fluid rounded shadow-sm"
+            style="max-width: 250px;">
+    </div>
+</div>
+
+<div class="row mb-4">
+    <div class="col-md-4">
+        <div class="card text-white bg-primary mb-3">
+            <div class="card-body">
+                <h5 class="card-title">Total Estudiantes</h5>
+                <p class="card-text display-4">{{ total_estudiantes }}</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card text-white bg-success mb-3">
+            <div class="card-body">
+                <h5 class="card-title">Total Docentes</h5>
+                <p class="card-text display-4">{{ total_docentes }}</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card text-white bg-info mb-3">
+            <div class="card-body">
+                <h5 class="card-title">Cursos Activos</h5>
+                <p class="card-text display-4">{{ total_cursos }}</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<h2>Gestión del Sistema</h2>
+<div class="list-group">
+    <a href="{{ url_for('admin.listar_estudiantes') }}" class="list-group-item list-group-item-action">Gestionar
+        Estudiantes</a>
+    <a href="{{ url_for('admin.listar_docentes') }}" class="list-group-item list-group-item-action">Gestionar
+        Docentes</a>
+    <a href="{{ url_for('admin.listar_materias') }}" class="list-group-item list-group-item-action">Gestionar
+        Materias</a>
+    <a href="{{ url_for('admin.listar_cursos') }}" class="list-group-item list-group-item-action">Gestionar Cursos</a>
+    <a href="{{ url_for('admin.listar_grados') }}" class="list-group-item list-group-item-action">Gestionar Grados</a>
+    <a href="{{ url_for('admin.listar_gestiones') }}" class="list-group-item list-group-item-action">Gestionar
+        Gestiones</a>
+    <a href="{{ url_for('admin.listar_asignaciones') }}" class="list-group-item list-group-item-action">Gestionar
+        Asignaciones (Activar Cursos)</a>
+    <a href="{{ url_for('admin.listar_horarios') }}" class="list-group-item list-group-item-action">Gestionar
+        Horario</a>
+    <a href="{{ url_for('admin.inscribir_estudiante') }}" class="list-group-item list-group-item-action">Inscribir
+        Estudiante a Curso</a>
+</div>
+
+{% endblock %}

@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+{% block title %}Detalles del Estudiante{% endblock %}
+
+{% block content %}
+
+<a href="{{ url_for('admin.listar_estudiantes') }}" class="btn btn-secondary mb-3">← Volver a la Lista</a>
+
+<div class="card">
+    <div class="card-header">
+        <h3 class="card-title mb-0">Información del Estudiante</h3>
+    </div>
+    {% if estudiante.foto %}
+    <div class="mb-3 text-center">
+        <img src="{{ url_for('admin.uploaded_file', filename=estudiante.foto) }}" alt="Foto de {{ estudiante.nombre }}"
+            class="img-thumbnail" style="max-width: 200px;">
+    </div>
+    {% endif %}
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-6">
+                <h5>Datos Personales</h5>
+                <p><strong>C.I.:</strong> {{ estudiante.ci }}</p>
+                <p><strong>Expedición:</strong>{{ estudiante.expedicion }}</p>
+                <p><strong>Nombre Completo:</strong> {{ estudiante.nombre }} {{ estudiante.paterno }} {{
+                    estudiante.materno }}</p>
+                <p><strong>Fecha de Nacimiento:</strong> {{ estudiante.fecha_nac.strftime('%d/%m/%Y') if
+                    estudiante.fecha_nac else 'No registrada' }}</p>
+                <p><strong>Género:</strong> {{ estudiante.genero }}</p>
+                <p><strong>Dirección:</strong> {{ estudiante.direccion or 'No registrada' }}</p>
+                <p><strong>Teléfono:</strong> {{ estudiante.telefono or 'No registrado' }}</p>
+            </div>
+            <div class="col-md-6">
+                <h5>Datos de los Padres</h5>
+                <p><strong>Nombre del Padre:</strong> {{ estudiante.nombre_padre or 'No registrado' }}</p>
+                <p><strong>Teléfono del Padre:</strong> {{ estudiante.telefono_padre or 'No registrado' }}</p>
+                <p><strong>Nombre de la Madre:</strong> {{ estudiante.nombre_madre or 'No registrada' }}</p>
+                <p><strong>Teléfono de la Madre:</strong> {{ estudiante.telefono_madre or 'No registrado' }}</p>
+            </div>
+        </div>
+
+        <hr>
+
+        <div class="row">
+            <div class="col-md-6">
+                <h5>Datos de Acceso al Sistema</h5>
+                <p><strong>Usuario:</strong> {{ usuario.nombre_usuario }}</p>
+            </div>
+            {% if inscripcion %}
+            <div class="col-md-6">
+                <h5>Estado Académico</h5>
+                <p><strong>Curso Actual:</strong> {{ inscripcion.curso_rel.grado_rel.nombre }} - Paralelo "{{
+                    inscripcion.curso_rel.grado_rel.paralelo }}"</p>
+                <p><strong>Gestión:</strong> {{ inscripcion.curso_rel.gestion_rel.anio }}</p>
+                <p><strong>Fecha de Inscripción:</strong> {{ inscripcion.fecha_inscripcion.strftime('%d/%m/%Y') }}</p>
+            </div>
+            {% else %}
+            <div class="col-md-6">
+                <h5>Estado Académico</h5>
+                <p class="text-warning">El estudiante no está inscrito en la gestión activa.</p>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+{% block title %}Boletín de Calificaciones del Curso{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+    <h1 class="h2">Boletín de Calificaciones</h1>
+    <h4>{{ curso.grado_rel.nombre }} "{{ curso.grado_rel.paralelo }}" - Gestión {{ curso.gestion_rel.anio }}</h4>
+</div>
+
+<div class="card">
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-bordered table-sm align-middle text-center">
+                <thead class="table-light">
+
+                    <tr>
+                        <th rowspan="2" style="width: 25%; vertical-align: middle;">Estudiante</th>
+                        {% for asignacion in asignaciones %}
+                        <th colspan="6">{{ asignacion.materia_rel.nombre }}</th>
+                        {% endfor %}
+                    </tr>
+                    <tr>
+                        {% for asignacion in asignaciones %}
+                        <th>1T</th>
+                        <th>2T</th>
+                        <th>3T</th>
+                        <th>Promedio</th>
+                        <th>Estado</th>
+                        {% endfor %}
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for data in estudiantes_data %}
+                    <tr>
+                        <td class="text-start">{{ data.estudiante.paterno }} {{ data.estudiante.materno }} {{ data.estudiante.nombre }}</td>
+                        
+                        {% for item in data.notas %}
+                        {% set nota = item.nota %}
+                        <td>{{ nota.primer_trimestre if nota and nota.primer_trimestre is not none else '-' }}</td>
+                        <td>{{ nota.segundo_trimestre if nota and nota.segundo_trimestre is not none else '-' }}</td>
+                        <td>{{ nota.tercer_trimestre if nota and nota.tercer_trimestre is not none else '-' }}</td>
+                        <td>
+                            <strong>
+                                {% if nota and nota.promedio_final is not none %}
+                                    {{ "%.2f"|format(nota.promedio_final) }}
+                                {% else %}
+                                    <span class="text-muted">-</span>
+                                {% endif %}
+                            </strong>
+                        </td>
+                        <td>
+                            {% if nota and nota.promedio_final is not none %}
+                                {% if nota.promedio_final >= 51 %}
+                                    <span class="badge bg-success">Aprobado</span>
+                                {% else %}
+                                    <span class="badge bg-danger">Reprobado</span>
+                                {% endif %}
+                            {% else %}
+                                <span class="badge bg-secondary">-</span>
+                            {% endif %}
+                        </td>
+                        
+                        {% endfor %}
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

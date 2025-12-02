@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+{% block title %}Panel del Docente{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+    <h1 class="h2">Panel del Docente</h1>
+    
+    <p class="text-muted">Conectado como: <strong>{{ current_user.nombre_usuario }}</strong></p>
+</div>
+
+<section class="mb-5">
+    <h3><i class="fas fa-users"></i> Ver Boletines de Calificaciones</h3>
+    <p class="text-muted">Accede al listado completo de estudiantes y sus notas por curso.</p>
+
+    <div class="row">
+        {% for curso in cursos %}
+        <div class="col-md-6 col-lg-4 mb-4">
+            <div class="card h-100 text-center">
+                <div class="card-body">
+                    <h5 class="card-title">{{ curso.grado_rel.nombre }} "{{ curso.grado_rel.paralelo }}"</h5>
+                    <p class="card-text">
+                        <small class="text-muted">Gestión: {{ curso.gestion_rel.anio }}</small>
+                    </p>
+                    <a href="{{ url_for('docente.lista_estudiantes_curso', id_curso=curso.id_curso) }}"
+                        class="btn btn-primary w-100">
+                        <i class="fas fa-list-alt"></i> Ver Lista de Estudiantes
+                    </a>
+                    <a href="{{ url_for('docente.descargar_boletin_curso', id_curso=curso.id_curso) }}"
+                        class="btn btn-danger">
+                        <i class="fas fa-file-pdf"></i> Descargar Boletín (PDF)
+                    </a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+
+<hr>
+
+
+<section>
+    <h3><i class="fas fa-edit"></i> Registrar Notas por Materia</h3>
+    <p class="text-muted">Selecciona una materia para ver y editar las notas de sus estudiantes.</p>
+
+    <div class="list-group">
+        {% for asignacion in asignaciones %}
+        <div class="list-group-item">
+            <div class="d-flex w-100 justify-content-between">
+                <h5 class="mb-1">
+                    <i class="fas fa-book-open"></i> {{ asignacion.materia_rel.nombre }}
+                </h5>
+                <small class="text-muted">{{ asignacion.curso_rel.grado_rel.nombre }} "{{ asignacion.curso_rel.paralelo
+                    }}"</small>
+            </div>
+
+            <div class="mt-3 d-flex gap-2">
+                <a href="{{ url_for('docente.listar_notas', id_asignacion=asignacion.id_asignacion) }}"
+                    class="btn btn-sm btn-primary flex-fill">
+                    <i class="fas fa-edit"></i> Editar Notas
+                </a>
+
+                <!--<a href="{{ url_for('docente.descargar_reporte_materia', id_materia=asignacion.materia_rel.id_materia) }}"
+                    class="btn btn-sm btn-danger flex-fill">
+                    <i class="fas fa-file-pdf"></i> Descargar Reporte
+                </a>-->
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+{% endblock %}

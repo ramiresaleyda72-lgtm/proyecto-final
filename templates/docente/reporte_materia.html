@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Reporte de Calificaciones</title>
+    <style>
+        body { font-family: Arial, sans-serif; }
+        .header { text-align: center; margin-bottom: 30px; }
+        .header img { max-width: 150px; }
+        .header h1 { margin: 5px 0; }
+        .header h3 { color: #555; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+        th { background-color: #f2f2f2; }
+        .text-center { text-align: center; }
+        .aprobado { color: green; font-weight: bold; }
+        .reprobado { color: red; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <img src="{{ logo_url }}" alt="Logo Colegio">
+        <h1>Reporte de Calificaciones</h1>
+        <h3>{{ materia.nombre }}</h3>
+    </div>
+
+    <table>
+        <thead>
+            <tr>
+                <th>CI</th>
+                <th>Nombre Completo</th>
+                <th class="text-center">Nota 1</th>
+                <th class="text-center">Nota 2</th>
+                <th class="text-center">Nota 3</th>
+                <th class="text-center">Promedio</th>
+                <th class="text-center">Estado</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for estudiante in estudiantes %}
+            <tr>
+                <td>{{ estudiante.estudiante.ci }}</td>
+                <td>{{ estudiante.estudiante.nombre }} {{ estudiante.estudiante.paterno }} {{ estudiante.estudiante.materno }}</td>
+                <td class="text-center">{{ estudiante.nota1 or 'S/N' }}</td>
+                <td class="text-center">{{ estudiante.nota2 or 'S/N' }}</td>
+                <td class="text-center">{{ estudiante.nota3 or 'S/N' }}</td>
+                <td class="text-center">{{ estudiante.promedio | round(2) }}</td>
+                <td class="text-center">
+                    {% if estudiante.promedio >= 51 %}
+                        <span class="aprobado">Aprobado</span>
+                    {% else %}
+                        <span class="reprobado">Reprobado</span>
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>

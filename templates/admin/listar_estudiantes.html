@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+{% block title %}Listado de Estudiantes{% endblock %}
+{% block content %}
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+    <h1 class="h2">Listado de Estudiantes</h1>
+    <a href="{{ url_for('admin.crear_estudiante') }}" class="btn btn-sm btn-outline-secondary">Crear Nuevo
+        Estudiante</a>
+</div>
+<div class="table-responsive">
+    <table class="table table-striped table-hover align-middle">
+        <thead class="table-dark">
+            <tr>
+                <th>ID</th>
+                <th>Nombre Completo</th>          
+                <th>C.I.</th>
+                <th>Expedición</th>
+                <th>Usuario</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {# Este bucle recorre cada 'estudiante' en la lista 'estudiantes' #}
+            {% for estudiante in estudiantes %}
+            <tr>
+
+                <td>{{ estudiante.id_estudiante}}</td>
+                <td>
+                    <a href="{{ url_for('admin.ver_estudiante', id_estudiante=estudiante.id_estudiante) }}"
+                        title="Ver detalles de {{ estudiante.nombre }} {{ estudiante.paterno }}">
+                        {{ estudiante.nombre }} {{ estudiante.paterno }} {{ estudiante.materno }}
+                    </a>
+                </td>
+                <td>{{ estudiante.ci }}</td>
+                <td>{{ estudiante.expedicion}}</td>
+                <td>{{ estudiante.usuario.nombre_usuario }}</td>
+                <td>
+
+                    <a href="{{ url_for('admin.editar_estudiante', id_estudiante=estudiante.id_estudiante) }}"
+                        class="btn btn-sm btn-warning">Editar</a>
+
+                    <form action="{{ url_for('admin.eliminar_estudiante', id_estudiante=estudiante.id_estudiante) }}"
+                        method="post"
+                        onsubmit="return confirm('¿Estás seguro de que quieres eliminar a este estudiante? Esta acción no se puede deshacer.');"
+                        style="display: inline;">
+                        <button type="submit" class="btn btn-sm btn-danger">Eliminar</button>
+                    </form>
+
+
+                </td>
+            </tr>
+            {% else %}
+            <tr>
+                <td colspan="5" class="text-center">No hay estudiantes registrados.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

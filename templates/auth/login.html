@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block title %}Login{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center align-items-center" style="min-height: 100vh;">
+    <div class="col-md-5">
+        <div class="card shadow-lg border-0 rounded-4">
+            <div class="card-header bg-primary text-white text-center rounded-top-4 py-3">
+                <h3 class="mb-0 fw-bold">Iniciar Sesión</h3>
+            </div>
+            <div class="text-center mb-4">
+                <img src="{{ url_for('serve_icono') }}" alt="Icono de Login" class="img-fluid rounded"
+                    style="max-width: 100px;">
+            </div>
+            <div class="card-body p-4">
+                <form method="POST" action="{{ url_for('auth.login') }}">
+                    <div class="mb-3">
+                        <label for="username" class="form-label fw-semibold">Usuario</label>
+                        <input type="text" class="form-control form-control-lg" id="username" name="username"
+                            placeholder="Ingrese su usuario" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="password" class="form-label fw-semibold">Contraseña </label>
+                        <input type="password" class="form-control form-control-lg" id="password" name="password"
+                            placeholder="Ingrese su contraseña" autocomplete="off" required>
+                    </div>
+                    <p class="text-center mt-3">
+                        ¿No tienes una cuenta? <a href="{{ url_for('auth.register') }}">Registrarse</a>
+                    </p>
+
+                    <button type="submit" class="btn btn-primary btn-lg w-100 mt-2 rounded-pill">
+                        Entrar
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block title %}Listado de Gestiones{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+    <h1 class="h2">Listado de Gestiones</h1>
+    <a href="{{ url_for('admin.crear_gestion') }}" class="btn btn-sm btn-outline-secondary">Crear Nueva Gestión</a>
+</div>
+
+<div class="table-responsive">
+    <table class="table table-striped table-hover align-middle">
+        <thead class="table-dark">
+            <tr>
+                <th>Año</th>
+                <th>Estado</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for gestion in gestiones %}
+            <tr>
+                <td>{{ gestion.anio }}</td>
+                <td><span class="badge bg-{{ 'success' if gestion.estado == 'ACTIVA' else 'secondary' }}">{{ gestion.estado }}</span></td>
+                <td>
+                    <form action="{{ url_for('admin.cambiar_estado_gestion', id_gestion=gestion.id_gestion) }}" method="post" style="display:inline;">
+                        {% if gestion.estado == 'ACTIVA' %}
+                            <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('¿Estás seguro de que quieres cerrar esta gestión?');">Cerrar Gestión</button>
+                        {% else %}
+                            <button type="submit" class="btn btn-sm btn-success">Reabrir Gestión</button>
+                        {% endif %}
+                    </form>
+                </td>
+            </tr>
+            {% else %}
+            <tr><td colspan="3" class="text-center">No hay gestiones registradas.</td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block title %}Crear Gestión{% endblock %}
+{% block content %}
+<h1>Crear Nueva Gestión Académica</h1>
+<form method="POST">
+    <div class="row">
+        <div class="col-md-6 mb-3">
+            <label for="anio" class="form-label">Año</label>
+            <input type="number" class="form-control" name="anio" placeholder="Ej: 2024" required>
+        </div>
+        <div class="col-md-6 mb-3">
+            <label for="estado" class="form-label">Estado</label>
+            <select class="form-select" name="estado" required>
+                <option value="ACTIVA">Activa</option>
+                <option value="CERRADA">Cerrada</option>
+            </select>
+        </div>
+    </div>
+    <button type="submit" class="btn btn-success">Crear Gestión</button>
+    <a href="{{ url_for('admin.listar_gestiones') }}" class="btn btn-secondary">Cancelar</a>
+</form>
+{% endblock %}

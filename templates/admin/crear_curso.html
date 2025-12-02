@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block title %}Crear Curso{% endblock %}
+{% block content %}
+<h1>Crear Nuevo Curso</h1>
+<form method="POST">
+    <div class="row">
+        <div class="col-md-6 mb-3">
+            <label for="id_grado" class="form-label">Grado y Paralelo</label>
+            <select class="form-select" name="id_grado" required>
+                <option value="">Selecciona un Grado</option>
+                {% for grado in grados %}
+                <option value="{{ grado.id_grado }}">{{ grado.nombre }} - Paralelo "{{ grado.paralelo }}"</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="col-md-6 mb-3">
+            <label for="id_gestion" class="form-label">Gestión</label>
+            <select class="form-select" name="id_gestion" required>
+                <option value="">Selecciona una Gestión</option>
+                {% for gestion in gestiones %}
+                <option value="{{ gestion.id_gestion }}">{{ gestion.anio }} ({{ gestion.estado }})</option>
+                {% endfor %}
+            </select>
+        </div>
+    </div>
+    <button type="submit" class="btn btn-success">Crear Curso</button>
+    <a href="{{ url_for('admin.listar_cursos') }}" class="btn btn-secondary">Cancelar</a>
+</form>
+{% endblock %}

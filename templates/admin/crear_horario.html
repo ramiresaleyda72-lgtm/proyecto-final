@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+
+{% block title %}Crear Horario{% endblock %}
+
+{% block content %}
+<h2>Crear Nuevo Horario</h2>
+<hr>
+<form method="POST">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="mb-3">
+                <label for="dia_semana" class="form-label">Día de la Semana</label>
+                <select class="form-select" id="dia_semana" name="dia_semana" required>
+                    <option value="">Seleccionar...</option>
+                    <option value="Lunes">Lunes</option>
+                    <option value="Martes">Martes</option>
+                    <option value="Miércoles">Miércoles</option>
+                    <option value="Jueves">Jueves</option>
+                    <option value="Viernes">Viernes</option>
+                </select>
+            </div>
+            <div class="mb-3">
+                <label for="hora_inicio" class="form-label">Hora de Inicio</label>
+                <input type="time" class="form-control" id="hora_inicio" name="hora_inicio" required>
+            </div>
+            <div class="mb-3">
+                <label for="hora_fin" class="form-label">Hora de Fin</label>
+                <input type="time" class="form-control" id="hora_fin" name="hora_fin" required>
+            </div>
+            <div class="mb-3">
+                <label for="hora_fin" class="form-label">Aula</label>
+                <input type="text" class="form-control" id="aula" name="aula" required>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="mb-3">
+                <label for="id_curso" class="form-label">Curso</label>
+                <select class="form-select" id="id_curso" name="id_curso" required>
+                    <option value="">Seleccionar...</option>
+                    {% for curso in cursos %}
+                    <option value="{{ curso.id_curso }}">{{ curso.grado_rel.nombre }} - Paralelo "{{ curso.grado_rel.paralelo }}"</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="mb-3">
+                <label for="id_materia" class="form-label">Materia</label>
+                <select class="form-select" id="id_materia" name="id_materia" required>
+                    <option value="">Seleccionar...</option>
+                    {% for materia in materias %}
+                    <option value="{{ materia.id_materia }}">{{ materia.nombre }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="mb-3">
+                <label for="id_docente" class="form-label">Docente</label>
+                <select class="form-select" id="id_docente" name="id_docente" required>
+                    <option value="">Seleccionar...</option>
+                    {% for docente in docentes %}
+                    <option value="{{ docente.id_docente }}">{{ docente.paterno }} {{ docente.nombre }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+    </div>
+    <button type="submit" class="btn btn-primary">Guardar Horario</button>
+    <a href="{{ url_for('admin.listar_horarios') }}" class="btn btn-secondary">Cancelar</a>
+</form>
+{% endblock %}

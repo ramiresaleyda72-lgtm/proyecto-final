@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+
+{% block title %}Registrarse{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body text-center">
+                    
+                    <img src="{{ url_for('serve_icono') }}" 
+                         alt="Icono de Registro" 
+                         class="img-fluid rounded mb-4"
+                         style="max-width: 100px;">
+
+                    <h2 class="mb-4">Crear Nueva Cuenta</h2>
+                    <p class="lead">Regístrate en el sistema escolar.</p>
+
+                    {% with messages = get_flashed_messages(with_categories=true) %}
+                        {% if messages %}
+                            {% for category, message in messages %}
+                                <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+                                    {{ message }}
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                </div>
+                            {% endfor %}
+                        {% endif %}
+                    {% endwith %}
+                    <form method="POST" action="{{ url_for('auth.register') }}">
+                        <div class="mb-3">
+                            <label for="nombre_usuario" class="form-label">Nombre de Usuario</label>
+                            <input type="text" class="form-control" id="nombre_usuario" name="nombre_usuario" required>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="rol" class="form-label">Tipo de Cuenta</label>
+                            <select class="form-select" id="rol" name="rol" required>
+                                <option value="">-- Selecciona un rol --</option>
+                                <option value="ADMIN">Administrador</option>
+                                <option value="DOCENTE">Docente</option>
+                                <option value="ESTUDIANTE">Estudiante</option>
+                            </select>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="password" class="form-label">Contraseña</label>
+                            <input type="password" class="form-control" id="password" name="password" required>
+                        </div>
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-primary">Registrarse</button>
+                        </div>
+                    </form>
+
+                    <p class="text-center mt-3">
+                        ¿Ya tienes una cuenta? <a href="{{ url_for('auth.login') }}">Iniciar Sesión</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

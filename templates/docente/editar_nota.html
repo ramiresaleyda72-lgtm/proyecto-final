@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block title %}Editar Nota de {{ nota.inscripcion_rel.estudiante_rel.nombre }}{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+    <h1 class="h2">Editar Nota</h1>
+</div>
+
+<div class="card">
+    <div class="card-body">
+        <h5>Estudiante: <strong>{{ nota.inscripcion_rel.estudiante_rel.paterno }} {{ nota.inscripcion_rel.estudiante_rel.nombre }}</strong></h5>
+        <h5>Materia: <strong>{{ nota.materia_rel.nombre }}</strong></h5>
+        <hr>
+        <form method="POST">
+            <div class="row">
+                <div class="col-md-3 mb-3">
+                    <label for="primer_trimestre" class="form-label">1er Trimestre</label>
+                    <input type="number" step="0.01" class="form-control" id="primer_trimestre" name="primer_trimestre" value="{{ nota.primer_trimestre }}" required>
+                </div>
+                <div class="col-md-3 mb-3">
+                    <label for="segundo_trimestre" class="form-label">2do Trimestre</label>
+                    <input type="number" step="0.01" class="form-control" id="segundo_trimestre" name="segundo_trimestre" value="{{ nota.segundo_trimestre }}" required>
+                </div>
+                <div class="col-md-3 mb-3">
+                    <label for="tercer_trimestre" class="form-label">3er Trimestre</label>
+                    <input type="number" step="0.01" class="form-control" id="tercer_trimestre" name="tercer_trimestre" value="{{ nota.tercer_trimestre }}" required>
+                </div>
+                <div class="col-md-3 mb-3">
+                    <label for="promedio_final" class="form-label">Promedio Final</label>
+                    <input type="number" step="0.01" class="form-control" id="promedio_final" name="promedio_final" value="{{ nota.promedio_final }}" readonly>
+                </div>
+            </div>
+            <hr>
+            <button type="submit" class="btn btn-success">Guardar Cambios</button>
+            <a href="{{ url_for('docente.registrar_notas', id_curso=nota.inscripcion_rel.id_curso, id_materia=nota.id_materia) }}" class="btn btn-secondary">Cancelar</a>
+        </form>
+    </div>
+</div>
+{% endblock %}

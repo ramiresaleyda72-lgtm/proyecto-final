@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block title %}Seleccionar Curso para Lista{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+    <h1 class="h2">Seleccionar un Curso</h1>
+</div>
+
+<p class="lead">Por favor, selecciona el curso del cual quieres ver la lista de estudiantes:</p>
+
+<div class="row">
+    {% for curso in cursos %}
+    <div class="col-md-6 col-lg-4 mb-4">
+        <div class="card h-100">
+            <div class="card-body text-center">
+                <h5 class="card-title">{{ curso.grado_rel.nombre }} "{{ curso.grado_rel.paralelo }}"</h5>
+                <p class="card-text">
+                    <small class="text-muted">Gestión: {{ curso.gestion_rel.anio }}</small>
+                </p>
+               
+                <a href="{{ url_for('docente.lista_simple_estudiantes', id_curso=curso.id_curso) }}" 
+                   class="btn btn-primary w-100">
+                    <i class="fas fa-users"></i> Ver Lista de Estudiantes
+                </a>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+{% endblock %}

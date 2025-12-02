@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block title %}Ver Notas{% endblock %}
+
+{% block content %}
+<h1>Ver Notas</h1>
+<p><strong>Curso:</strong> {{ inscripcion.curso_rel.grado_rel.nombre }} - Paralelo "{{ inscripcion.curso_rel.grado_rel.paralelo }}" - {{ inscripcion.curso_rel.gestion_rel.anio }}</p>
+
+{% if notas %}
+<div class="table-responsive">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Materia</th>
+                <th>1er Trimestre</th>
+                <th>2do Trimestre</th>
+                <th>3er Trimestre</th>
+                <th>Promedio Final</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for nota in notas %}
+            <tr>
+                <td>{{ nota.materia_rel.nombre }}</td>
+                <td>{{ nota.primer_trimestre or '-' }}</td>
+                <td>{{ nota.segundo_trimestre or '-' }}</td>
+                <td>{{ nota.tercer_trimestre or '-' }}</td>
+                <td><strong>{{ "%.2f"|format(nota.promedio_final) if nota.promedio_final else '-' }}</strong></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+<div class="mb-3">
+    <a href="{{ url_for('estudiante.descargar_reporte_pdf') }}" class="btn btn-success" target="_blank">
+         Descargar Reporte en PDF
+    </a>
+</div>
+{% else %}
+<p>Aún no se han registrado notas para ti en este curso.</p>
+{% endif %}
+{% endblock %}

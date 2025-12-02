@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block title %}Crear Asignación (Activar Curso){% endblock %}
+{% block content %}
+<h1>Crear Nueva Asignación</h1>
+<p class="text-muted">Aquí asignas un docente a una materia específica en un curso.</p>
+
+<form method="POST">
+    <div class="row">
+        <div class="col-md-4 mb-3">
+            <label for="id_curso" class="form-label">Curso</label>
+            <select class="form-select" name="id_curso" required>
+                <option value="">Selecciona un Curso</option>
+                {% for curso in cursos %}
+                <option value="{{ curso.id_curso }}">{{ curso.grado_rel.nombre }} - Paralelo "{{ curso.grado_rel.paralelo }}" ({{ curso.gestion_rel.anio }})</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="col-md-4 mb-3">
+            <label for="id_materia" class="form-label">Materia</label>
+            <select class="form-select" name="id_materia" required>
+                <option value="">Selecciona una Materia</option>
+                {% for materia in materias %}
+                <option value="{{ materia.id_materia }}">{{ materia.nombre }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="col-md-4 mb-3">
+            <label for="id_docente" class="form-label">Docente</label>
+            <select class="form-select" name="id_docente" required>
+                <option value="">Selecciona un Docente</option>
+                {% for docente in docentes %}
+                <option value="{{ docente.id_docente }}">{{ docente.nombre }} {{ docente.paterno }}</option>
+                {% endfor %}
+            </select>
+        </div>
+    </div>
+    <button type="submit" class="btn btn-success">Crear Asignación</button>
+    <a href="{{ url_for('admin.listar_asignaciones') }}" class="btn btn-secondary">Cancelar</a>
+</form>
+{% endblock %}

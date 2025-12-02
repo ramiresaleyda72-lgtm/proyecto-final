@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% block title %}Inscribirse en un Curso{% endblock %}
+
+{% block content %}
+<h1>Inscripción a Cursos</h1>
+
+{% if ya_inscrito %}
+
+    <div class="alert alert-info" role="alert">
+        <h4 class="alert-heading">¡Ya estás inscrito!</h4>
+        <p>Ya te inscribiste en el siguiente curso para la gestión actual. Solo puedes estar inscrito en un curso a la vez.</p>
+        <hr>
+        <p class="mb-0">
+            <strong>Curso:</strong> {{ inscripcion_actual.curso_rel.grado_rel.nombre }} - Paralelo "{{ inscripcion_actual.curso_rel.grado_rel.paralelo }}"<br>
+            <strong>Gestión:</strong> {{ inscripcion_actual.curso_rel.gestion_rel.anio }}
+        </p>
+    </div>
+
+{% else %}
+    <p class="lead">Selecciona el curso en el que deseas inscribirte para la gestión activa.</p>
+
+    {% if cursos %}
+        <form method="POST">
+            <div class="list-group">
+                {% for curso in cursos %}
+                <label class="list-group-item list-group-item-action">
+                    <input class="form-check-input me-1" type="radio" name="id_curso" value="{{ curso.id_curso }}" required>
+                    {{ curso.grado_rel.nombre }} - Paralelo "{{ curso.grado_rel.paralelo }}" - Gestión {{ curso.gestion_rel.anio }}
+                </label>
+                {% endfor %}
+            </div>
+            <div class="mt-3">
+                <button type="submit" class="btn btn-primary">Confirmar Inscripción</button>
+                <a href="{{ url_for('estudiante.dashboard') }}" class="btn btn-secondary">Volver</a>
+            </div>
+        </form>
+    {% else %}
+        <div class="alert alert-warning" role="alert">
+            No hay cursos disponibles para la gestión activa. Por favor, contacta al administrador.
+        </div>
+    {% endif %}
+{% endif %}
+
+{% endblock %}

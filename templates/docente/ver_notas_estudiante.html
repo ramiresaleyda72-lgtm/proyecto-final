@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+{% block title %}Resumen de Notas{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+    <h1 class="h2">Resumen de Notas</h1>
+</div>
+
+<div class="card">
+    <div class="card-header">
+        <h4 class="mb-0">
+            {{ inscripcion.estudiante_rel.paterno }} {{ inscripcion.estudiante_rel.nombre }}
+        </h4>
+        <small class="text-muted">Materia: {{ materia.nombre }}</small>
+    </div>
+    <div class="card-body">
+        {% if nota %}
+            <table class="table table-striped">
+                <tbody>
+                    <tr>
+                        <th scope="row" style="width: 30%;">Primer Trimestre</th>
+                        <td>{{ nota.primer_trimestre if nota.primer_trimestre is not none else 'No Registrado' }}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Segundo Trimestre</th>
+                        <td>{{ nota.segundo_trimestre if nota.segundo_trimestre is not none else 'No Registrado' }}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Tercer Trimestre</th>
+                        <td>{{ nota.tercer_trimestre if nota.tercer_trimestre is not none else 'No Registrado' }}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row"><h5>Promedio Final</h5></th>
+                        <td><h4>{{ nota.promedio_final if nota.promedio_final is not none else 'Pendiente' }}</h4></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="mt-3">
+                {% if nota.promedio_final is not none %}
+                    {% if nota.promedio_final >= 51 %}
+                        <div class="alert alert-success" role="alert">
+                            <strong>Resultado: APROBADO</strong>
+                        </div>
+                    {% else %}
+                        <div class="alert alert-danger" role="alert">
+                            <strong>Resultado: REPROBADO</strong>
+                        </div>
+                    {% endif %}
+                {% else %}
+                    <div class="alert alert-warning" role="alert">
+                        <strong>Estado: PENDIENTE</strong> - Faltan notas para calcular el promedio.
+                    </div>
+                {% endif %}
+            </div>
+
+        {% else %}
+            <p>Este estudiante aún no tiene ninguna nota registrada para esta materia.</p>
+        {% endif %}
+        
+        <a href="{{ url_for('docente.registrar_notas', id_asignacion=asignacion.id_asignacion) }}" class="btn btn-secondary mt-3">Volver</a>
+    </div>
+</div>
+
+{% endblock %}

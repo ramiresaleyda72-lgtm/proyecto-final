@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% block title %}Listado de Cursos{% endblock %}
+{% block content %}
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+    <h1 class="h2">Listado de Cursos</h1>
+ 
+    <a href="{{ url_for('admin.crear_curso') }}" class="btn btn-sm btn-outline-secondary">Crear Nuevo Curso</a>
+    
+</div>
+<div class="table-responsive">
+    <table class="table table-striped table-hover align-middle">
+        <thead class="table-dark">
+            <tr>
+                <th>Curso</th>
+                <th>Gestión</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for curso in cursos %}
+            <tr>
+                <td>{{ curso.grado_rel.nombre }} - Paralelo "{{ curso.grado_rel.paralelo }}"</td>
+                <td>{{ curso.gestion_rel.anio }}</td>
+                <td>
+                    <a href="{{ url_for('admin.editar_curso', id_curso=curso.id_curso) }}" class="btn btn-sm btn-warning me-1">Editar</a>
+                    <form action="{{ url_for('admin.eliminar_curso', id_curso=curso.id_curso) }}" method="post" 
+                          onsubmit="return confirm('¿Estás seguro de que quieres eliminar este curso? Si tiene estudiantes o asignaciones, no se podrá eliminar.');"
+                          style="display: inline;">
+                        <button type="submit" class="btn btn-sm btn-danger">Eliminar</button>
+                    </form>
+                </td>
+            </tr>
+            {% else %}
+            <tr>
+                <td colspan="3" class="text-center">No hay cursos registrados para la gestión activa.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

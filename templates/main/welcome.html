@@ -1,0 +1,62 @@
+<!-- templates/main/welcome.html -->
+
+{% extends "base.html" %}
+
+{% block title %}Bienvenidos{% endblock %}
+
+{% block content %}
+
+<style>
+  
+  body {
+    background-image: url("{{ url_for('static', filename='images/escuela.jpg') }}");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 100vh; 
+  }
+
+  .welcome-container {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .welcome-card {
+    background-color: rgba(255, 255, 255, 0.85); 
+    padding: 40px;
+    border-radius: 15px;
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+    text-align: center;
+  }
+
+  .welcome-title {
+    font-weight: 700;
+    color: #2c3e50; 
+  }
+
+  .welcome-subtitle {
+    color: #7f8c8d; 
+  }
+</style>
+
+<div class="welcome-container">
+  <div class="welcome-card">
+
+    <img src="{{ url_for('serve_icono') }}" 
+         alt="Icono de Bienvenida" 
+         class="img-fluid rounded mb-4"
+         style="max-width: 100px;">
+
+    <h1 class="welcome-title mb-3">¡Bienvenidos!</h1>
+    <h3 class="welcome-subtitle mb-4">UNIDAD EDUCATIVA 16 DE NOVIEMBRE</h3>
+    <p class="lead mb-4">Sistema de Gestión Escolar</p>
+    
+    <a href="{{ url_for('auth.login') }}" class="btn btn-primary btn-lg">
+      Entrar al Sistema
+    </a>
+  </div>
+</div>
+
+{% endblock %}

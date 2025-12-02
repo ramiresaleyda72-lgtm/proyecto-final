@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+
+{% block title %}Boletín de Calificaciones{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-12">
+
+            <a href="{{ url_for('docente.dashboard') }}" class="btn btn-secondary mb-3">
+                <i class="fas fa-arrow-left"></i> Volver a mis Materias
+            </a>
+
+            <div class="card">
+                <div class="card-header bg-primary text-white">
+                    <h3 class="mb-0">
+                        <i class="fas fa-clipboard-list me-2"></i>
+                        Boletín de Calificaciones
+                    </h3>
+                </div>
+                <div class="card-body">
+                    <h4 class="text-center mb-4">{{ materia.nombre }}</h4>
+
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-striped">
+                            <thead class="table-dark">
+                                <tr>
+                                    <th scope="col">CI</th>
+                                    <th scope="col">Nombre Completo del Estudiante</th>
+                                    <th scope="col" class="text-center">Calificación</th>
+                                    <th scope="col" class="text-center">Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for item in boletin %}
+                                <tr>
+                                    <td>{{ item.estudiante.ci }}</td>
+                                    <td>{{ item.estudiante.nombre }} {{ item.estudiante.paterno }} {{ item.estudiante.materno }}</td>
+                                    <td class="text-center fw-bold">{{ item.nota }}</td>
+                                    <td class="text-center">
+
+                                        <a href="{{ url_for('docente.editar_nota', id_materia=materia.id, id_estudiante=item.estudiante.id) }}" class="btn btn-sm btn-warning">
+                                            <i class="fas fa-edit"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

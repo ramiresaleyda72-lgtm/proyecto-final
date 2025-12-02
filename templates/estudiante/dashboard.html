@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+{% block title %}Mi Panel{% endblock %}
+{% block content %}
+
+<div class="p-5 mb-4 bg-light rounded-3">
+    <div class="container-fluid py-5">
+        <h1 class="display-5 fw-bold">{{ current_user.estudiante.nombre }} {{ current_user.estudiante.paterno }} {{ current_user.estudiante.materno }}</h1>
+        <p class="col-md-8 fs-4">Bienvenido a tu portal. Aquí puedes ver tu progreso académico.</p>
+    </div>
+</div>
+{% if inscripcion %}
+    <div class="card mb-4">
+        <div class="card-header">
+            <h3 class="card-title">Mi Curso Actual</h3>
+        </div>
+        <div class="card-body">
+            <p class="card-text">
+                <strong>Curso:</strong> {{ inscripcion.curso_rel.grado_rel.nombre }} - Paralelo "{{ inscripcion.curso_rel.grado_rel.paralelo }}"<br>
+                <strong>Gestión:</strong> {{ inscripcion.curso_rel.gestion_rel.anio }}
+            </p>
+            <a href="{{ url_for('estudiante.ver_notas') }}" class="btn btn-primary">Ver Notas</a>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title">Mis Materias</h3>
+        </div>
+        <div class="card-body">
+            {% if asignaciones %}
+                <div class="list-group">
+                    {% for asignacion in asignaciones %}
+                    <div class="list-group-item">
+                        <div class="d-flex w-100 justify-content-between">
+                            <h5 class="mb-1">{{ asignacion.materia_rel.nombre }}</h5>
+                            <small class="text-muted">Docente: {{ asignacion.docente_rel.nombre }} {{ asignacion.docente_rel.paterno }}</small>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <p class="card-text text-muted">Aún no se han asignado materias para tu curso. El administrador lo hará pronto.</p>
+            {% endif %}
+        </div>
+    </div>
+
+{% else %}
+    <div class="alert alert-warning" role="alert">
+        <h4 class="alert-heading">Aún no estás inscrito!</h4>
+        <p>Parece que no te has inscrito en ningún curso para la gestión activa.</p>
+        <hr>
+        <p class="mb-0">Haz clic en el siguiente botón para inscribirte.</p>
+        {% if not inscripcion %}
+            <a href="{{ url_for('estudiante.inscribirse') }}" class="btn btn-warning mt-2">Inscribirse en un Curso</a>
+        {% endif %}
+    </div>
+{% endif %}
+
+{% endblock %}
