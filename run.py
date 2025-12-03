@@ -12,10 +12,6 @@ def serve_logo():
     print(f"Buscando el logo en: {logo_directory}")
     return send_from_directory(logo_directory, '16nov.jpg')
 
-@app.route('/test')  
-def test_route():
-    return "¡Hola! El servidor está cargando el archivo run.py correctamente."
-
 @app.route('/icono')
 def serve_icono():
     """

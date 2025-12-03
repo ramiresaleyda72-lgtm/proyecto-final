@@ -11,7 +11,7 @@ class Usuario(UserMixin, db.Model):
     nombre_usuario = db.Column(db.String(80), unique=True, nullable=False)
     contraseña = db.Column(db.String(255), nullable=False)
     rol = db.Column(db.Enum('ADMIN', 'DOCENTE', 'ESTUDIANTE', name='rol_usuario'), nullable=False)
-
+    
     estudiante = db.relationship('Estudiante', backref='usuario', uselist=False)
     docente = db.relationship('Docente', backref='usuario', uselist=False)
 
